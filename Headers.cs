@@ -17,21 +17,19 @@
         ushort SizeOfOptionalHeader,
         ushort Characteristics
     );
-    internal record struct OptionalHeader
+    internal record struct OptionalHeaderStandardFields
     (
-        ushort Magic,
-
-        // Standard Fields
         byte MajorLinkerVersion,
         byte MinorLinkerVersion,
         uint SizeOfCode,
         uint SizeOfInitializedData,
         uint SizeOfUninitializedData,
         uint AddressOfEntryPoint,
-        uint BaseOfCode,
-        uint BaseOfData,
-        
-        // Windows Specific Fields
+        uint BaseOfCode
+    );
+    internal record struct OptionalHeaderWindowsSpecificFields
+    (
+        uint? BaseOfData,
         uint ImageBase,
         uint SectionAlignment,
         uint FileAlignment,
@@ -47,12 +45,18 @@
         uint CheckSum,
         ushort Subsystem,
         ushort DllCharacteristics,
-        uint SizeOfStackReserve,
-        uint SizeOfStackCommit,
-        uint SizeOfHeapReserve,
-        uint SizeOfHeapCommit,
-        uint LoaderFlags,
-        uint NumberOfRvaAndSizes
-    //IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+        dynamic SizeOfStackReserve,
+        dynamic SizeOfStackCommit,
+        dynamic SizeOfHeapReserve,
+        dynamic SizeOfHeapCommit,
+        dynamic LoaderFlags,
+        dynamic NumberOfRvaAndSizes
+    );
+    internal record struct OptionalHeader
+    (
+        ushort Magic,
+        OptionalHeaderStandardFields StandardFields,
+        OptionalHeaderWindowsSpecificFields WindowsSpecificFields
+        //IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
     );
 }
