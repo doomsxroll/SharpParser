@@ -128,8 +128,8 @@
             ulong SizeOfStackCommit = BitConverter.ToUInt64(inFile, (int)offset + 0x50);
             ulong SizeOfHeapReserve = BitConverter.ToUInt64(inFile, (int)offset + 0x58);
             ulong SizeOfHeapCommit = BitConverter.ToUInt64(inFile, (int)offset + 0x60);
-            ulong LoaderFlags = BitConverter.ToUInt64(inFile, (int)offset + 0x68);
-            ulong NumberOfRvaAndSizes = BitConverter.ToUInt64(inFile, (int)offset + 0x6C);
+            uint LoaderFlags = BitConverter.ToUInt32(inFile, (int)offset + 0x68);
+            uint NumberOfRvaAndSizes = BitConverter.ToUInt32(inFile, (int)offset + 0x6C);
             // IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 
             return new OptionalHeaderWindowsSpecificFieldsPE32Plus(
