@@ -34,26 +34,9 @@
                 Characteristics
                 );
         }
-        internal static OptionalHeader ParseOptionalHeader(byte[] inFile, uint offset)
-        {
-            ushort Magic = BitConverter.ToUInt16(inFile, (int)offset);
-            OptionalHeaderStandardFields StandardFields = ParseOptionalHeaderStandardFields(inFile, offset);
-            OptionalHeaderWindowsSpecificFields WindowsSpecificFields;
-            if (Magic == Constants.PE32)
-                WindowsSpecificFields = ParseOptionalHeaderWindowsSpecificPE32(inFile, offset);
-            else if (Magic == Constants.PE32Plus)
-                WindowsSpecificFields = ParseOptionalHeaderWindowsSpecificPE32Plus(inFile, offset);
-            else
-                throw new InvalidDataException($"Unknown PE magic number (probably a ROM file): 0x{Magic:X}");
-
-            return new OptionalHeader(
-                Magic,
-                StandardFields,
-                WindowsSpecificFields
-                );
-        }
         internal static OptionalHeaderStandardFields ParseOptionalHeaderStandardFields(byte[] inFile, uint offset)
         {
+            ushort Magic = BitConverter.ToUInt16(inFile, (int)offset);
             byte MajorLinkerVersion = inFile[(int)offset + 0x2];
             byte MinorLinkerVersion = inFile[(int)offset + 0x3];
             uint SizeOfCode = BitConverter.ToUInt32(inFile, (int)offset + 0x4);
@@ -63,6 +46,7 @@
             uint BaseOfCode = BitConverter.ToUInt32(inFile, (int)offset + 0x14);
 
             return new OptionalHeaderStandardFields(
+                Magic,
                 MajorLinkerVersion,
                 MinorLinkerVersion,
                 SizeOfCode,
@@ -72,7 +56,7 @@
                 BaseOfCode
                 );
         }
-        internal static OptionalHeaderWindowsSpecificFields ParseOptionalHeaderWindowsSpecificPE32(byte[] inFile, uint offset) 
+        internal static OptionalHeaderWindowsSpecificFieldsPE32 ParseOptionalHeaderWindowsSpecificPE32(byte[] inFile, uint offset) 
         {
             uint BaseOfData = BitConverter.ToUInt32(inFile, (int)offset + 0x18);
             uint ImageBase = BitConverter.ToUInt32(inFile, (int)offset + 0x1C);
@@ -97,7 +81,7 @@
             uint LoaderFlags = BitConverter.ToUInt32(inFile, (int)offset + 0x58);
             uint NumberOfRvaAndSizes = BitConverter.ToUInt32(inFile, (int)offset + 0x5C);
 
-            return new OptionalHeaderWindowsSpecificFields(
+            return new OptionalHeaderWindowsSpecificFieldsPE32(
                 BaseOfData,
                 ImageBase,
                 SectionAlignment,
@@ -123,9 +107,9 @@
             // IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
             );
         }
-        internal static OptionalHeaderWindowsSpecificFields ParseOptionalHeaderWindowsSpecificPE32Plus(byte[] inFile, uint offset)
+        internal static OptionalHeaderWindowsSpecificFieldsPE32Plus ParseOptionalHeaderWindowsSpecificPE32Plus(byte[] inFile, uint offset)
         {
-            uint ImageBase = BitConverter.ToUInt32(inFile, (int)offset + 0x18);
+            ulong ImageBase = BitConverter.ToUInt64(inFile, (int)offset + 0x18);
             uint SectionAlignment = BitConverter.ToUInt32(inFile, (int)offset + 0x20);
             uint FileAlignment = BitConverter.ToUInt32(inFile, (int)offset + 0x24);
             ushort MajorOperatingSystemVersion = BitConverter.ToUInt16(inFile, (int)offset + 0x28);
@@ -144,12 +128,11 @@
             ulong SizeOfStackCommit = BitConverter.ToUInt64(inFile, (int)offset + 0x50);
             ulong SizeOfHeapReserve = BitConverter.ToUInt64(inFile, (int)offset + 0x58);
             ulong SizeOfHeapCommit = BitConverter.ToUInt64(inFile, (int)offset + 0x60);
-            uint LoaderFlags = BitConverter.ToUInt32(inFile, (int)offset + 0x68);
-            uint NumberOfRvaAndSizes = BitConverter.ToUInt32(inFile, (int)offset + 0x6C);
+            ulong LoaderFlags = BitConverter.ToUInt64(inFile, (int)offset + 0x68);
+            ulong NumberOfRvaAndSizes = BitConverter.ToUInt64(inFile, (int)offset + 0x6C);
             // IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 
-            return new OptionalHeaderWindowsSpecificFields(
-                null, // no BaseOfData in PE32+
+            return new OptionalHeaderWindowsSpecificFieldsPE32Plus(
                 ImageBase,
                 SectionAlignment,
                 FileAlignment,

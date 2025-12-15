@@ -19,6 +19,7 @@
     );
     internal record struct OptionalHeaderStandardFields
     (
+        ushort Magic,
         byte MajorLinkerVersion,
         byte MinorLinkerVersion,
         uint SizeOfCode,
@@ -27,9 +28,9 @@
         uint AddressOfEntryPoint,
         uint BaseOfCode
     );
-    internal record struct OptionalHeaderWindowsSpecificFields
+    internal record struct OptionalHeaderWindowsSpecificFieldsPE32
     (
-        uint? BaseOfData,
+        uint BaseOfData,
         uint ImageBase,
         uint SectionAlignment,
         uint FileAlignment,
@@ -45,18 +46,35 @@
         uint CheckSum,
         ushort Subsystem,
         ushort DllCharacteristics,
-        dynamic SizeOfStackReserve,
-        dynamic SizeOfStackCommit,
-        dynamic SizeOfHeapReserve,
-        dynamic SizeOfHeapCommit,
-        dynamic LoaderFlags,
-        dynamic NumberOfRvaAndSizes
+        uint SizeOfStackReserve,
+        uint SizeOfStackCommit,
+        uint SizeOfHeapReserve,
+        uint SizeOfHeapCommit,
+        uint LoaderFlags,
+        uint NumberOfRvaAndSizes
     );
-    internal record struct OptionalHeader
+    internal record struct OptionalHeaderWindowsSpecificFieldsPE32Plus
     (
-        ushort Magic,
-        OptionalHeaderStandardFields StandardFields,
-        OptionalHeaderWindowsSpecificFields WindowsSpecificFields
-        //IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+        ulong ImageBase,
+        uint SectionAlignment,
+        uint FileAlignment,
+        ushort MajorOperatingSystemVersion,
+        ushort MinorOperatingSystemVersion,
+        ushort MajorImageVersion,
+        ushort MinorImageVersion,
+        ushort MajorSubsystemVersion,
+        ushort MinorSubsystemVersion,
+        uint Win32VersionValue,
+        uint SizeOfImage,
+        uint SizeOfHeaders,
+        uint CheckSum,
+        ushort Subsystem,
+        ushort DllCharacteristics,
+        ulong SizeOfStackReserve,
+        ulong SizeOfStackCommit,
+        ulong SizeOfHeapReserve,
+        ulong SizeOfHeapCommit,
+        ulong LoaderFlags,
+        ulong NumberOfRvaAndSizes
     );
 }
