@@ -19,10 +19,10 @@ namespace SharpParser
             this.OptionalHeaderStandardFields = Parsers.ParseOptionalHeaderStandardFields(inFile, OptionalHeaderStart);
 
             if (this.OptionalHeaderStandardFields.Magic == Constants.PE32) {
-                this.OptionalHeaderWindowsSpecificFieldsPE32 = Parsers.ParseOptionalHeaderWindowsSpecificPE32(inFile, OptionalHeaderStart + 0x18);
+                this.OptionalHeaderWindowsSpecificFieldsPE32 = Parsers.ParseOptionalHeaderWindowsSpecificPE32(inFile, OptionalHeaderStart);
             } else if (this.OptionalHeaderStandardFields.Magic == Constants.PE32Plus)
             {
-                this.OptionalHeaderWindowsSpecificFieldsPE32Plus = Parsers.ParseOptionalHeaderWindowsSpecificPE32Plus(inFile, OptionalHeaderStart + 0x18);
+                this.OptionalHeaderWindowsSpecificFieldsPE32Plus = Parsers.ParseOptionalHeaderWindowsSpecificPE32Plus(inFile, OptionalHeaderStart);
             } else
             {
                 throw new Exception($"Not a PE: {this.OptionalHeaderStandardFields.Magic}");

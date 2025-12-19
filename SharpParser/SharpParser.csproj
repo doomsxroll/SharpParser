@@ -8,5 +8,8 @@
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
-
+  <ItemGroup>
+	<InternalsVisibleTo Include="SharpParserTests" />
+  </ItemGroup>
+	
 </Project>

@@ -2,7 +2,7 @@
 {
     internal static class Constants
     {
-        internal const uint DOSSignature = 0x5A4D; 
+        internal const uint DOSSignature = 0x5A4D;
         internal const int PESignatureOffset = 0x3C;
         // PE signature is "PE00" but x64 intel arch is little endian, so is stored as 00EP
         internal const uint PESignature = 0x00004550;
