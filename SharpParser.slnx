@@ -1,1 +1,4 @@
-<Solution />
+<Solution>
+  <Project Path="SharpParser.Tests/SharpParser.Tests.csproj" Id="3c2245d7-fcc4-49e7-9503-b691d3daf99a" />
+  <Project Path="SharpParser/SharpParser.csproj" />
+</Solution>
