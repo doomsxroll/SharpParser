@@ -2,7 +2,6 @@ namespace SharpParser
 {
     internal class PE
     {
-        // File Headers
         internal DOSHeader DOSHeader { get; }
         internal byte[] DOSHeaderRaw { get; }
         internal uint COFFHeaderStart { get; }

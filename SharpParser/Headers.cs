@@ -74,7 +74,7 @@
         ulong SizeOfStackCommit,
         ulong SizeOfHeapReserve,
         ulong SizeOfHeapCommit,
-        ulong LoaderFlags,
-        ulong NumberOfRvaAndSizes
+        uint LoaderFlags,
+        uint NumberOfRvaAndSizes
     );
 }

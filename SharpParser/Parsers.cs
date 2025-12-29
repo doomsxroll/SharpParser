@@ -5,7 +5,7 @@
         internal static DOSHeader ParseDOSHeader(byte[] inFile)
         {
             ushort MagicNumber = BitConverter.ToUInt16(inFile, 0);
-            uint SignatureLocation = BitConverter.ToUInt32(inFile, Constants.PESignatureOffset);
+            uint SignatureLocation = BitConverter.ToUInt32(inFile, (int)Constants.PESignatureOffset);
             uint Signature = BitConverter.ToUInt32(inFile, (int)SignatureLocation);
 
             return new DOSHeader(
