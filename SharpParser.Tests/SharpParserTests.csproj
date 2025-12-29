@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="MSTest" Version="4.0.1" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\SharpParser\SharpParser.csproj" />
   </ItemGroup>
@@ -18,5 +18,5 @@
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
-
+	
 </Project>

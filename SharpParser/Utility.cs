@@ -9,21 +9,21 @@ namespace SharpParser
             byte[] fileBytes = File.ReadAllBytes(filePath);
             return fileBytes;
         }
-        internal static void PrintToConsole(byte[] PE)
+        internal static void PrintToConsole(byte[] inArray, uint startAddress = 0)
         {
 
-            int size = PE.Length;
+            int size = inArray.Length;
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < size; i++)
             {
-                if (i % 16 == 0) Console.Write($"{i:X8}: ");
+                if (i % 16 == 0) Console.Write($"{i+startAddress:X8}: ");
 
-                Console.Write($"{PE[i]:X2} ");
+                Console.Write($"{inArray[i]:X2} ");
 
-                if (PE[i] >= 32 && PE[i] <= 126)
+                if (inArray[i] >= 32 && inArray[i] <= 126)
                 {
-                    sb.Append((char)PE[i]);
+                    sb.Append((char)inArray[i]);
                 }
                 else
                 {
